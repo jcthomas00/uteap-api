@@ -30,10 +30,7 @@ router.post('/',(req,res)=>{
         })
     }
     if (process.env[loginDetails]){
-        res.send({
-            upass: `Username: ${process.env[loginDetails]} | Password: ${process.env[loginDetails]}`,
-            udeeplink: `?txtUserName=${process.env[loginDetails]}&txtPassword=${process.env[loginDetails]}`
-        })
+        res.send(process.env[loginDetails])
     } else{
         res.send("");
     }
