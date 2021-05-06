@@ -34,7 +34,9 @@ router.post('/',(req,res)=>{
             upass: `Username: ${process.env[loginDetails]} | Password: ${process.env[loginDetails]}`,
             udeeplink: `?txtUserName=${process.env[loginDetails]}&txtPassword=${process.env[loginDetails]}`
         })
-    } 
+    } else{
+        res.send("");
+    }
     
     console.log(`Input: ${userEntry} & uteapCompanies: ${loginDetails}`);
 })
