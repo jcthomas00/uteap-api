@@ -12,6 +12,5 @@ app.use(cors());
 app.use('/users',usersRoutes);
 app.get('/', (request,response)=>{
     response.send("Contact Jacob.Thomas@outlook.com for more information");
-
 })
-app.listen(PORT, () => {console.log(`Server running on Port that is: ${PORT}`)});
+app.listen(PORT, () => {console.log(`Server running on Port: ${PORT}`)});
