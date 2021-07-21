@@ -6,16 +6,16 @@ require('dotenv').config();
 
 const router = express.Router();
 
-router.get('/', (req,res)=>{
-    res.send("Only POST requests can be made.");
+router.get('/', (req, res) => {
+    res.send("Only POST requests can be made. DB:" + process.env.DATABASE_URL);
 })
 
-router.post('/',(req,res)=>{
+router.post('/', (req, res) => {
     let loginDetails = "";
 
     //get input and return empty string if nothing was sent
-    const userEntry = req.body.email ? req.body.email.toLowerCase():'';
-    if (userEntry===''){
+    const userEntry = req.body.email ? req.body.email.toLowerCase() : '';
+    if (userEntry === '') {
         res.send("");
     }
 
@@ -24,15 +24,15 @@ router.post('/',(req,res)=>{
     const validEmails = process.env.validEmails.split(",");
 
     //check which category the email falls under and set the proper login
-    validEmails.some((email)=>{
-        if (userEntry.includes(email)){
+    validEmails.some((email) => {
+        if (userEntry.includes(email)) {
             loginDetails = email;
             return false;
         }
     })
-    if(loginDetails===""){
-        standardCompanies.some(function(company){
-            if (userEntry.includes(company)){
+    if (loginDetails === "") {
+        standardCompanies.some(function (company) {
+            if (userEntry.includes(company)) {
                 loginDetails = "standardCompany";
                 return false;
             }
@@ -40,9 +40,9 @@ router.post('/',(req,res)=>{
     }
 
     //return login info
-    if (process.env[loginDetails]){
+    if (process.env[loginDetails]) {
         res.send(process.env[loginDetails])
-    } else{
+    } else {
         res.send("");
     }
 })
