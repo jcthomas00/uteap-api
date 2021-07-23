@@ -18,7 +18,7 @@ async function dbInsert() {
 
     client.connect();
 
-    client.query('SELECT * FROM sitelogins;', (err, res) => {
+    client.query("INSERT INTO sitelogins(suffix,login_time) VALUES('cog2',current_timestamp);", (err, res) => {
         if (err) res.send("ERROR");;
         for (let row of res.rows) {
             test += JSON.stringify(row);
