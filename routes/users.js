@@ -6,9 +6,8 @@ require('dotenv').config();
 
 const router = express.Router();
 
-async function dbInsert() {
+function dbInsert(suffix) {
     const { Client } = require('pg');
-    var test = '';
     const client = new Client({
         connectionString: process.env.DATABASE_URL,
         ssl: {
@@ -17,19 +16,14 @@ async function dbInsert() {
     });
 
     client.connect();
-
-    client.query("INSERT INTO sitelogins(suffix,login_time) VALUES('cog2',current_timestamp);", (err, res) => {
-        if (err) res.send("ERROR");;
-        for (let row of res.rows) {
-            test += JSON.stringify(row);
-        }
+    const query = "INSERT INTO sitelogins(suffix,login_time) VALUES('" + suffix + "',current_timestamp);";
+    client.query(query, (err, res) => {
+        if (err) res.send("ERROR");
         client.end();
     });
-    return test;
 }
 router.get('/', (req, res) => {
-    dbInsert().then((test) => res.send("Only POST requests can be made. Test2: " + test));
-
+    res.send("Only POST requests can be made.");
 })
 
 router.post('/', (req, res) => {
@@ -64,6 +58,7 @@ router.post('/', (req, res) => {
     //return login info
     if (process.env[loginDetails]) {
         res.send(process.env[loginDetails])
+        dbInsert(loginDetails);
     } else {
         res.send("");
     }
