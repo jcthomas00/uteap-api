@@ -7,7 +7,26 @@ require('dotenv').config();
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    res.send("Only POST requests can be made. DB:" + process.env.DATABASE_URL);
+    const { Client } = require('pg');
+    var test = '';
+    const client = new Client({
+        connectionString: process.env.DATABASE_URL,
+        ssl: {
+            rejectUnauthorized: false
+        }
+    });
+
+    client.connect();
+
+    client.query('SELECT * FROM sitelogins;', (err, res) => {
+        if (err) throw err;
+        for (let row of res.rows) {
+            test += JSON.stringify(row);
+        }
+        client.end();
+    });
+
+    res.send("Only POST requests can be made. Test: " + test);
 })
 
 router.post('/', (req, res) => {
