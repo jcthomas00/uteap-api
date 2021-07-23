@@ -6,7 +6,7 @@ require('dotenv').config();
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
+async function dbInsert() {
     const { Client } = require('pg');
     var test = '';
     const client = new Client({
@@ -19,14 +19,16 @@ router.get('/', (req, res) => {
     client.connect();
 
     client.query('SELECT * FROM sitelogins;', (err, res) => {
-        if (err) throw err;
+        if (err) res.send("ERROR");;
         for (let row of res.rows) {
             test += JSON.stringify(row);
         }
         client.end();
     });
-
-    res.send("Only POST requests can be made. Test: " + test);
+    return test;
+}
+router.get('/', (req, res) => {
+    res.send("Only POST requests can be made. Test2: " + dbInsert());
 })
 
 router.post('/', (req, res) => {
