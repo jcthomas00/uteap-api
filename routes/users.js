@@ -28,7 +28,8 @@ async function dbInsert() {
     return test;
 }
 router.get('/', (req, res) => {
-    res.send("Only POST requests can be made. Test2: " + dbInsert());
+    dbInsert().then((test) => res.send("Only POST requests can be made. Test2: " + test));
+
 })
 
 router.post('/', (req, res) => {
