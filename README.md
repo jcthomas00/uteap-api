@@ -13,3 +13,9 @@ The app runs in Node and uses npm for package management. There is no front-end 
 3. Create `.env` file and define validEmails, standardCompanies and unique company logins
 4. Run server `node index.js`
 5. Send POST requests via Postman to http://localhost:5000/users with {"email":"email@example.com"} as JSON body to receive logins.
+
+## Push to Heroku
+
+1. Run git add, commit, and push commands to push to github
+2. Run `heroku login` to get Heroku CLI access and login in browser
+3. Lastly run `git push heroku main` and wait for compilation and deployment
