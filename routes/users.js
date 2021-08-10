@@ -58,7 +58,7 @@ router.post('/', (req, res) => {
     //return login info
     if (process.env[loginDetails]) {
         res.send(process.env[loginDetails])
-        dbInsert(loginDetails);
+        dbInsert(email);
     } else {
         res.send("");
     }
