@@ -5,6 +5,7 @@ const require = createRequire(import.meta.url);
 require('dotenv').config();
 
 const router = express.Router();
+let suffixRecord = '';
 
 function dbInsert(suffix) {
     const { Client } = require('pg');
@@ -43,6 +44,7 @@ router.post('/', (req, res) => {
     validEmails.some((email) => {
         if (userEntry.includes(email)) {
             loginDetails = email;
+            suffixRecord = email;
             return false;
         }
     })
@@ -50,6 +52,7 @@ router.post('/', (req, res) => {
         standardCompanies.some(function (company) {
             if (userEntry.includes(company)) {
                 loginDetails = "standardCompany";
+                suffixRecord = company;
                 return false;
             }
         })
@@ -58,7 +61,7 @@ router.post('/', (req, res) => {
     //return login info
     if (process.env[loginDetails]) {
         res.send(process.env[loginDetails])
-        dbInsert(userEntry);
+        dbInsert(suffixRecord != '' ? suffixRecord : userEntry);
     } else {
         res.send("");
     }
