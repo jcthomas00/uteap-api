@@ -61,9 +61,10 @@ router.post('/', (req, res) => {
     //return login info
     if (process.env[loginDetails]) {
         res.send(process.env[loginDetails])
-        dbInsert(suffixRecord != '' ? suffixRecord : userEntry);
+        dbInsert(suffixRecord);
     } else {
         res.send("");
+        dbInsert(userEntry);
     }
 })
 
