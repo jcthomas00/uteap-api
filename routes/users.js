@@ -1,5 +1,6 @@
 import express from 'express';
 import { createRequire } from 'module';
+import fetch from "node-fetch";
 
 const require = createRequire(import.meta.url);
 require('dotenv').config();
@@ -25,6 +26,12 @@ function dbInsert(suffix) {
 }
 router.get('/', (req, res) => {
     res.send("Only POST requests can be made.");
+})
+
+router.get('/therapist', (req, res) => {
+    fetch('https://ghoapi.azureedge.net/api/MH_11')
+        .then(response => response.json())
+        .then(data => res.send(data));
 })
 
 router.post('/', (req, res) => {
